@@ -9,14 +9,18 @@
 import Foundation
 
 struct AsyncCallbackType<ResultType> {
-  typealias ManagerCallback = (error: AnyObject?, results:Array<ResultType>?) -> Void
+  typealias ManagerCallback = (error: AnyObject?, results:Array<ResultType?>?) -> Void
+
   typealias SeriesCallback = (err: AnyObject?, result: ResultType?) -> Void
   typealias SeriesTaskCallback = (SeriesCallback) -> Void
+  
+  typealias ParallelCallback = (err: AnyObject?, result: ResultType?) -> Void
+  typealias ParallelTaskCallback = (ParallelCallback) -> Void
 
 }
 
 internal class AbstractAsyncTaskManager : Equatable {
-  
+  func run() -> Void {}
 }
 
 func ==(lhs: AbstractAsyncTaskManager, rhs: AbstractAsyncTaskManager) -> Bool {
@@ -54,7 +58,7 @@ internal class AsyncSeriesTaskManager<ResultType> : AsyncTaskManager<AsyncCallba
   // property
   
   var currentPivot:Int = 0 // current pivot index
-  var results:Array<ResultType> = []
+  var results:Array<ResultType?> = []
   
   lazy var nextCallback:AsyncCallbackType<ResultType>.SeriesCallback = {
     [unowned self] (err: AnyObject?, result: ResultType?) -> Void in
@@ -88,7 +92,7 @@ internal class AsyncSeriesTaskManager<ResultType> : AsyncTaskManager<AsyncCallba
     self.run()
   }
   
-  func run() -> Void {
+  override func run() -> Void {
     
     if self.currentPivot < tasks.count && !self.isEnd { // validate up
       
@@ -109,6 +113,107 @@ internal class AsyncSeriesTaskManager<ResultType> : AsyncTaskManager<AsyncCallba
   
 }
 
+internal class AsyncParallelTaskManager<ResultType> : AsyncTaskManager<AsyncCallbackType<ResultType>.ParallelTaskCallback, ResultType> {
+  
+  // property
+  
+  var completedCount = 0
+  var runIndex = 0;
+  
+  var results:Array<ResultType?> = []
+  
+  lazy var nextCallback:AsyncCallbackType<ResultType>.ParallelCallback = {
+    [unowned self] (err: AnyObject?, result: ResultType?) -> Void in
+    
+    if let err:AnyObject = err? {
+      
+      if let callback = self.callback? {
+        callback(error:err, results:nil);
+      }
+      
+    }
+    else {
+      
+      if let result:ResultType = result? {
+//        var index:Int = -1
+        
+//        if index != -1 {
+          self.results.insert(result, atIndex:0)
+//        }
+      }
+      
+      self.completedCount++
+      if self.completedCount >= self.tasks.count {
+        self.isEnd = true
+        
+        if let callback = self.callback? {
+          callback(error:nil, results:self.results)
+        }
+        
+        Async.dismissTaskManager(self)
+      }
+    }
+  };
+  
+  
+  func createCallback(index:Int) -> (AsyncCallbackType<ResultType>.ParallelCallback) {
+    
+    
+    return {
+      [unowned self] (err: AnyObject?, result: ResultType?) -> Void in
+      
+      if let err:AnyObject = err? {
+        
+        if let callback = self.callback? {
+          callback(error:err, results:nil);
+        }
+        
+      }
+      else {
+        
+        if let result:ResultType = result? {
+          //        var index:Int = -1
+          
+          //        if index != -1 {
+          self.results[index] = result
+          //        }
+        }
+        
+        self.completedCount++
+        if self.completedCount >= self.tasks.count {
+          self.isEnd = true
+          
+          if let callback = self.callback? {
+            callback(error:nil, results:self.results)
+          }
+          
+          Async.dismissTaskManager(self)
+        }
+      }
+    };
+  }
+  
+  // methods
+  
+  init(tasks:Array<AsyncCallbackType<ResultType>.ParallelTaskCallback>, callback: AsyncCallbackType<ResultType>.ManagerCallback?) {
+    super.init()
+    self.tasks = tasks
+    self.callback = callback
+    
+    self.results = Array<ResultType?>(count: self.tasks.count, repeatedValue: nil)
+  }
+  
+  override func run() -> Void {
+    
+    if self.completedCount < tasks.count && !self.isEnd { // validate up
+      for (index, task:(AsyncCallbackType<ResultType>.ParallelTaskCallback)) in enumerate(self.tasks) {
+        task(self.createCallback(index))
+      }
+    }
+  }
+  
+}
+
 var _taskManagers:Array<AbstractAsyncTaskManager> = []
 
 class Async {
@@ -119,6 +224,16 @@ class Async {
   
   class func series<ResultType>(tasks:Array<AsyncCallbackType<ResultType>.SeriesTaskCallback>, callback:AsyncCallbackType<ResultType>.ManagerCallback?) {
     var task:AsyncSeriesTaskManager = AsyncSeriesTaskManager<ResultType>(tasks: tasks, callback)
+    Async.registerTaskManger(task)
+    task.run()
+  }
+  
+  class func parallel(tasks:Array<AsyncCallbackType<Void>.SeriesTaskCallback>) {
+    self.parallel(tasks, callback: nil)
+  }
+  
+  class func parallel<ResultType>(tasks:Array<AsyncCallbackType<ResultType>.SeriesTaskCallback>, callback:AsyncCallbackType<ResultType>.ManagerCallback?) {
+    var task:AsyncParallelTaskManager = AsyncParallelTaskManager<ResultType>(tasks: tasks, callback)
     Async.registerTaskManger(task)
     task.run()
   }
