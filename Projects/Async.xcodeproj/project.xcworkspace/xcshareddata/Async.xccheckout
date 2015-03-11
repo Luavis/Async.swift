@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>657759A5-C06F-4361-845D-F595C741CB4E</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Async</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>817D141093362B0AD01FD08227AF9EB7A44A0F5A</key>
+		<string>https://github.com/Luavis/Async.swift.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Projects/Async.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>817D141093362B0AD01FD08227AF9EB7A44A0F5A</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Luavis/Async.swift.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>817D141093362B0AD01FD08227AF9EB7A44A0F5A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>817D141093362B0AD01FD08227AF9EB7A44A0F5A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Async</string>
+		</dict>
+	</array>
+</dict>
+</plist>

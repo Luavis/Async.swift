@@ -12,6 +12,17 @@ var _taskManagers:Array<AbstractAsyncTaskManager> = []
 
 class Async {
   
+  class func registerTaskManger(taskManager: AbstractAsyncTaskManager) -> Void {
+    _taskManagers.append(taskManager)
+  }
+  
+  class func dismissTaskManager(taskManager: AbstractAsyncTaskManager) -> Void {
+    _taskManagers.removeObject(taskManager)
+  }
+}
+
+extension Async { // Series
+  
   class func series(tasks:Array<AsyncCallbackType<Void>.SeriesTaskCallback>) {
     self.series(tasks, callback: nil)
   }
@@ -21,6 +32,9 @@ class Async {
     Async.registerTaskManger(task)
     task.run()
   }
+}
+
+extension Async { // Parallel
   
   class func parallel(tasks:Array<AsyncCallbackType<Void>.SeriesTaskCallback>) {
     self.parallel(tasks, callback: nil)
@@ -31,13 +45,17 @@ class Async {
     Async.registerTaskManger(task)
     task.run()
   }
+}
+
+extension Async { // whilst
   
-  class func registerTaskManger(taskManager: AbstractAsyncTaskManager) -> Void {
-    _taskManagers.append(taskManager)
+  class func whilst(tasks:Array<AsyncCallbackType<Void>.WhilstTaskCallback>) {
+    self.whilst(tasks, callback: nil)
   }
   
-  class func dismissTaskManager(taskManager: AbstractAsyncTaskManager) -> Void {
-    _taskManagers.removeObject(taskManager)
+  class func whilst<ResultType>(tasks:Array<AsyncCallbackType<ResultType>.WhilstTaskCallback>, callback:AsyncCallbackType<ResultType>.ManagerCallback?) {
+    var task:AsyncWhilstTaskManager = AsyncWhilstTaskManager<ResultType>(tasks: tasks, callback)
+    Async.registerTaskManger(task)
+    task.run()
   }
-  
 }

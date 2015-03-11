@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		A7505CFC1AAEC5FC0010048D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7505CFB1AAEC5FC0010048D /* main.swift */; };
-		A7505D031AAEC6060010048D /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7505D021AAEC6060010048D /* Async.swift */; };
-		A76190171AAF376E006C9522 /* AsyncTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76190161AAF376E006C9522 /* AsyncTaskManager.swift */; };
+		A7A6E3001AAFFD830025AB0C /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A6E2FB1AAFFD6B0025AB0C /* Async.swift */; };
+		A7A6E3011AAFFD830025AB0C /* AsyncParallelTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A6E2FC1AAFFD6B0025AB0C /* AsyncParallelTaskManager.swift */; };
+		A7A6E3021AAFFD830025AB0C /* AsyncSeriesTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A6E2FD1AAFFD6B0025AB0C /* AsyncSeriesTaskManager.swift */; };
+		A7A6E3031AAFFD830025AB0C /* AsyncTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A6E2FE1AAFFD6B0025AB0C /* AsyncTaskManager.swift */; };
+		A7A6E3041AAFFD830025AB0C /* AsyncWhilstTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A6E2FF1AAFFD6B0025AB0C /* AsyncWhilstTaskManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,8 +30,11 @@
 /* Begin PBXFileReference section */
 		A7505CF81AAEC5FC0010048D /* Async */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Async; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7505CFB1AAEC5FC0010048D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		A7505D021AAEC6060010048D /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
-		A76190161AAF376E006C9522 /* AsyncTaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncTaskManager.swift; sourceTree = "<group>"; };
+		A7A6E2FB1AAFFD6B0025AB0C /* Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
+		A7A6E2FC1AAFFD6B0025AB0C /* AsyncParallelTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncParallelTaskManager.swift; sourceTree = "<group>"; };
+		A7A6E2FD1AAFFD6B0025AB0C /* AsyncSeriesTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncSeriesTaskManager.swift; sourceTree = "<group>"; };
+		A7A6E2FE1AAFFD6B0025AB0C /* AsyncTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTaskManager.swift; sourceTree = "<group>"; };
+		A7A6E2FF1AAFFD6B0025AB0C /* AsyncWhilstTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncWhilstTaskManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,11 +67,23 @@
 		A7505CFA1AAEC5FC0010048D /* Async */ = {
 			isa = PBXGroup;
 			children = (
+				A7A6E2FA1AAFFD6B0025AB0C /* Classes */,
 				A7505CFB1AAEC5FC0010048D /* main.swift */,
-				A7505D021AAEC6060010048D /* Async.swift */,
-				A76190161AAF376E006C9522 /* AsyncTaskManager.swift */,
 			);
 			path = Async;
+			sourceTree = "<group>";
+		};
+		A7A6E2FA1AAFFD6B0025AB0C /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A7A6E2FB1AAFFD6B0025AB0C /* Async.swift */,
+				A7A6E2FC1AAFFD6B0025AB0C /* AsyncParallelTaskManager.swift */,
+				A7A6E2FD1AAFFD6B0025AB0C /* AsyncSeriesTaskManager.swift */,
+				A7A6E2FE1AAFFD6B0025AB0C /* AsyncTaskManager.swift */,
+				A7A6E2FF1AAFFD6B0025AB0C /* AsyncWhilstTaskManager.swift */,
+			);
+			name = Classes;
+			path = ../../Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,9 +142,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A7505D031AAEC6060010048D /* Async.swift in Sources */,
 				A7505CFC1AAEC5FC0010048D /* main.swift in Sources */,
-				A76190171AAF376E006C9522 /* AsyncTaskManager.swift in Sources */,
+				A7A6E3001AAFFD830025AB0C /* Async.swift in Sources */,
+				A7A6E3011AAFFD830025AB0C /* AsyncParallelTaskManager.swift in Sources */,
+				A7A6E3021AAFFD830025AB0C /* AsyncSeriesTaskManager.swift in Sources */,
+				A7A6E3031AAFFD830025AB0C /* AsyncTaskManager.swift in Sources */,
+				A7A6E3041AAFFD830025AB0C /* AsyncWhilstTaskManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
